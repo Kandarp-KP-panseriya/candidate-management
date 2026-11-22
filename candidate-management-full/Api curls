@@ -1,0 +1,41 @@
+curl --location 'http://localhost:8080/api/v1/candidates/getCandidate' \
+--header 'id: 1'
+
+
+curl --location 'http://localhost:8080/api/v1/candidates/createCandidate' \
+--header 'id: 1' \
+--header 'Content-Type: application/json' \
+--data-raw ' {
+    "firstName": "Sneha",
+    "lastName": "Mehta",
+    "email": "sneha.mehta@example.com",
+    "phone": "+91 9876543213",
+    "skills": "Angular, TypeScript, Java, Spring Boot",
+    "experienceYears": 1.5,
+    "currentCompany": "Accenture",
+    "noticePeriodDays": 15
+  }'
+
+
+
+curl --location --request PUT 'http://localhost:8080/api/v1/candidates/updateCandidate' \
+--header 'id: 1' \
+--header 'Content-Type: application/json' \
+--data-raw '  {
+    "firstName": "Rahul",
+    "lastName": "Sharma",
+    "email": "rahul.sharma@example.com",
+    "phone": "+91 9876543210",
+    "skills": "Java, Spring Boot, MySQL, Hibernate",
+    "experienceYears": 3.5,
+    "currentCompany": "Google",
+    "noticePeriodDays": 30
+  }'
+
+
+curl --location --request DELETE 'http://localhost:8080/api/v1/candidates/deleteCandidate' \
+--header 'id: 4'
+
+
+curl --location 'http://localhost:8080/api/v1/candidates/searchCandidates?page=0&size=1&sort=createdAt%2Cdesc' \
+--header 'q: mit'
