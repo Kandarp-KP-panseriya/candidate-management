@@ -40,6 +40,14 @@ public class CandidateController {
         service.delete(id);
         return ResponseEntity.noContent().build();
     }
-
-
+    @GetMapping
+    public Page<CandidateResponse> search(
+        @RequestParam(required = false) String q,
+        @RequestParam(required = false) @DecimalMin("0.0") Double minExperience,
+        @RequestParam(required = false) @DecimalMin("0.0") Double maxExperience,
+        @RequestParam(required = false) String company,
+        @PageableDefault(size = 20, sort = "createdAt", direction = Sort.Direction.DESC) Pageable pageable
+    ) {
+        return service.search(q, minExperience, maxExperience, company, pageable);
+    }
 }

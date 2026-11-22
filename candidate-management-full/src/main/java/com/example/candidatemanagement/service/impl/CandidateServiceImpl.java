@@ -51,6 +51,21 @@ public class CandidateServiceImpl implements CandidateService {
         repository.delete(findCandidate(id));
     }
 
+    @Override
+    @Transactional(readOnly = true)
+    public Page<CandidateResponse> search(String q, Double minExperience, Double maxExperience,
+                                          String company, Pageable pageable) {
+        if (minExperience != null && maxExperience != null && minExperience > maxExperience) {
+            throw new IllegalArgumentException("minExperience must be less than or equal to maxExperience");
+        }
+        Specification<Candidate> spec = Specification
+            .where(CandidateSpecification.hasText(q))
+            .and(CandidateSpecification.experienceAtLeast(minExperience))
+            .and(CandidateSpecification.experienceAtMost(maxExperience))
+            .and(CandidateSpecification.companyContains(company));
+        return repository.findAll(spec, pageable).map(this::toResponse);
+    }
+
     private Candidate findCandidate(Long id) {
         return repository.findById(id)
             .orElseThrow(() -> new ResourceNotFoundException("Candidate not found with id: " + id));
