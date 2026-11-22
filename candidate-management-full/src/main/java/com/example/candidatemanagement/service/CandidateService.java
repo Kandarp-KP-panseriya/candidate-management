@@ -10,5 +10,6 @@ public interface CandidateService {
     CandidateResponse getById(Long id);
     CandidateResponse update(Long id, CandidateRequest request);
     void delete(Long id);
-
+    Page<CandidateResponse> search(String q, Double minExperience, Double maxExperience,
+                                   String company, Pageable pageable);
 }
