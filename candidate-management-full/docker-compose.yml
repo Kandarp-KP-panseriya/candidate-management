@@ -1,0 +1,13 @@
+services:
+  mysql:
+    image: mysql:8.4
+    container_name: candidate-management-mysql
+    environment:
+      MYSQL_ROOT_PASSWORD: root
+      MYSQL_DATABASE: candidate_management
+    ports:
+      - "3306:3306"
+    volumes:
+      - candidate_mysql_data:/var/lib/mysql
+volumes:
+  candidate_mysql_data:
